@@ -1,0 +1,104 @@
+<!-- Navigation / Language Toggle -->
+<nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center font-bold text-white">JM</div>
+      <span class="font-bold text-slate-200 hidden sm:block">Jonathan Malagueta</span>
+    </div>
+    
+    <button (click)="lang.toggleLanguage()" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-full border border-slate-700 transition-colors text-sm font-medium">
+      <span [class.text-indigo-400]="!lang.isEnglish()" [class.text-slate-500]="lang.isEnglish()">PT</span>
+      <span class="text-slate-600">/</span>
+      <span [class.text-indigo-400]="lang.isEnglish()" [class.text-slate-500]="!lang.isEnglish()">EN</span>
+    </button>
+  </div>
+</nav>
+
+<main class="pt-20 pb-20">
+  <!-- HERO SECTION -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 min-h-[80vh] flex flex-col lg:flex-row items-center gap-12">
+    <div class="flex-1 space-y-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wide">
+        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+        {{ lang.t().hero.badge }}
+      </div>
+      
+      <h1 class="text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-tight">
+        {{ lang.t().hero.headline }}
+      </h1>
+      
+      <p class="text-xl text-slate-400 max-w-2xl leading-relaxed border-l-4 border-indigo-500 pl-6">
+        {{ lang.t().hero.subtitle }}
+      </p>
+
+      <div class="pt-4">
+        <a href="#projects" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-indigo-600 border border-transparent rounded-lg hover:bg-indigo-700 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 focus:ring-offset-slate-900">
+          {{ lang.t().hero.cta }}
+        </a>
+      </div>
+    </div>
+
+    <!-- 3D VIZ PLACEHOLDER (Lazy Loaded) -->
+    <div class="flex-1 w-full max-w-lg aspect-square lg:h-[500px] relative">
+      <!-- 
+        Using @defer to lazy load the heavy 3D component. 
+        It loads immediately when the browser is idle.
+      -->
+      @defer (on idle) {
+        <app-three-viz />
+      } @placeholder {
+        <div class="w-full h-full bg-slate-900 rounded-xl flex items-center justify-center border border-slate-800 animate-pulse">
+          <span class="text-slate-600 font-mono">Loading WebGL Module...</span>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- BIO SECTION -->
+  <section class="bg-slate-900/50 border-y border-slate-800/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="grid lg:grid-cols-2 gap-16">
+        <div>
+          <h2 class="text-3xl font-bold text-white mb-8">{{ lang.t().bio.title }}</h2>
+          <div class="space-y-6 text-slate-400 leading-relaxed">
+            <p>{{ lang.t().bio.p1 }}</p>
+            <p>{{ lang.t().bio.p2 }}</p>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="p-6 bg-slate-950 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center">
+            <div class="text-4xl font-bold text-indigo-500 mb-2">5+</div>
+            <div class="text-sm text-slate-400">Years Exp</div>
+          </div>
+          <div class="p-6 bg-slate-950 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center">
+            <div class="text-3xl font-bold text-purple-500 mb-2">IoT/3D</div>
+            <div class="text-sm text-slate-400">Specialist</div>
+          </div>
+          <div class="p-6 bg-slate-950 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center">
+            <div class="text-3xl font-bold text-cyan-500 mb-2">MSc</div>
+            <div class="text-sm text-slate-400">Software Eng.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASES SECTION -->
+  <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+    <div class="mb-12">
+      <h2 class="text-3xl lg:text-4xl font-bold text-white">{{ lang.t().cases.title }}</h2>
+      <div class="h-1 w-20 bg-indigo-600 mt-4 rounded-full"></div>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 h-auto">
+      @for (caseItem of lang.t().cases.items; track caseItem.id) {
+        <app-case-card [item]="caseItem" />
+      }
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-slate-800 bg-slate-950 py-8 text-center">
+  <p class="text-slate-500 text-sm font-mono">{{ lang.t().footer }}</p>
+</footer>
