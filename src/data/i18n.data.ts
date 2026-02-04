@@ -46,7 +46,7 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
     },
     bio: {
       title: "O Flow do Engenheiro",
-      p1: "Aos 27 anos, sou um Engenheiro de Software Manauara que encontra o equilíbrio perfeito entre a batida calma do Lo-fi Hip Hop e o ritmo acelerado de sistemas críticos. Sou um desenvolvedor T-Shaped: minha base em Angular e .NET sustenta uma versatilidade que vai da renderização pixel-perfect com Three.js à responsabilidade de integrações fiscais com a SEFAZ.",
+      p1: `Aos ${new Date().getFullYear() - 1999} anos, sou um Engenheiro de Software Manauara que encontra o equilíbrio perfeito entre a batida calma do Lo-fi Hip Hop e o ritmo acelerado de sistemas críticos. Sou um desenvolvedor T-Shaped: minha base em Angular e .NET sustenta uma versatilidade que vai da renderização pixel-perfect com Three.js à responsabilidade de integrações fiscais com a SEFAZ.`,
       p2: "No Instituto Eldorado, lidero arquiteturas IoT que orquestram milhares de dispositivos via AOSP e Google AMAPI. Acredito que a excelência nasce da união entre teoria e prática: com Bacharelado e Pós em Engenharia, agora expando fronteiras na Pós em IA Aplicada (UNIPDS), focado em unir a robustez da engenharia clássica com a inovação da Inteligência Artificial.",
       stats: {
         exp: "5+ Anos de Exp.",
@@ -95,7 +95,7 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
     },
     bio: {
       title: "The Engineer's Flow",
-      p1: "At 27, I am a Software Engineer from Manaus who balances the calm beat of Lo-fi Hip Hop with the fast pace of critical systems. I am a T-Shaped developer: my core strength in Angular and .NET supports a versatility ranging from pixel-perfect 3D rendering (Three.js) to critical fiscal integrations.",
+      p1: `At ${new Date().getFullYear() - 1999}, I am a Software Engineer from Manaus who balances the calm beat of Lo-fi Hip Hop with the fast pace of critical systems. I am a T-Shaped developer: my core strength in Angular and .NET supports a versatility ranging from pixel-perfect 3D rendering (Three.js) to critical fiscal integrations.`,
       p2: "At Instituto Eldorado, I lead IoT architectures orchestrating thousands of devices via AOSP and Google AMAPI. I believe excellence comes from uniting theory and practice: holding a Bachelor's and Post-Grad in Engineering, I am now expanding boundaries with a specialization in Applied AI (UNIPDS), merging robust engineering with AI innovation.",
       stats: {
         exp: "5+ Years Exp.",
