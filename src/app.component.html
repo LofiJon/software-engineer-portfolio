@@ -1,9 +1,14 @@
 <!-- Navigation / Language Toggle -->
 <nav class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-slate-800">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <div class="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center font-bold text-white">JM</div>
-      <span class="font-bold text-slate-200 hidden sm:block">Jonathan Malagueta</span>
+    <div class="flex items-center gap-3">
+      <!-- Profile Avatar in Nav -->
+      <div class="relative w-9 h-9 rounded-full overflow-hidden border border-indigo-500/30 group cursor-pointer">
+        <img src="https://pub-0a27b82cc40c4ac1b69041d70bdf3ce7.r2.dev/jon.jpeg" 
+             alt="Profile" 
+             class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-300">
+      </div>
+      <span class="font-bold text-slate-200 hidden sm:block tracking-tight">Jonathan Malagueta</span>
     </div>
     
     <button (click)="lang.toggleLanguage()" class="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 px-4 py-2 rounded-full border border-slate-700 transition-colors text-sm font-medium">
@@ -40,10 +45,6 @@
 
     <!-- 3D VIZ PLACEHOLDER (Lazy Loaded) -->
     <div class="flex-1 w-full max-w-lg aspect-square lg:h-[500px] relative">
-      <!-- 
-        Using @defer to lazy load the heavy 3D component. 
-        It loads immediately when the browser is idle.
-      -->
       @defer (on idle) {
         <app-three-viz />
       } @placeholder {
@@ -54,41 +55,131 @@
     </div>
   </section>
 
-  <!-- BIO SECTION -->
-  <section class="bg-slate-900/50 border-y border-slate-800/50">
+  <section class="bg-slate-900/30 border-y border-slate-800/50 overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <div class="grid lg:grid-cols-2 gap-16">
-        <div>
-          <h2 class="text-3xl font-bold text-white mb-8">{{ lang.t().bio.title }}</h2>
-          <div class="space-y-6 text-slate-400 leading-relaxed">
-            <p>{{ lang.t().bio.p1 }}</p>
-            <p>{{ lang.t().bio.p2 }}</p>
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+        
+        <div class="lg:col-span-5 relative group order-2 lg:order-1">
+          <div class="absolute -inset-4 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 rounded-[2rem] blur-xl opacity-75 group-hover:opacity-100 transition duration-700"></div>
+          
+          <div class="relative rounded-2xl overflow-hidden border border-slate-700/50 shadow-2xl aspect-[3/4] lg:aspect-auto lg:h-[600px]">
+             <img src="https://pub-0a27b82cc40c4ac1b69041d70bdf3ce7.r2.dev/jon.jpeg"
+                  alt="Jonathan Malagueta Profile" 
+                  class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out will-change-transform group-hover:scale-105">
+             
+             <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent"></div>
+             
+             <!-- Floating Badge -->
+             <div class="absolute bottom-6 left-6 right-6 backdrop-blur-md bg-white/5 border border-white/10 p-4 rounded-xl translate-y-2 opacity-90 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                 <p class="text-xs text-indigo-300 font-mono mb-1 tracking-wider">CURRENT STATUS</p>
+                 <div class="flex items-center gap-2">
+                   <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                   <p class="text-white font-semibold text-sm">Designing Scalable Architectures</p>
+                 </div>
+             </div>
           </div>
         </div>
-        
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div class="p-6 bg-slate-950 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center">
-            <div class="text-4xl font-bold text-indigo-500 mb-2">5+</div>
-            <div class="text-sm text-slate-400">Years Exp</div>
+
+        <!-- Text Content Column -->
+        <div class="lg:col-span-7 space-y-10 order-1 lg:order-2">
+          <div>
+            <h2 class="text-3xl lg:text-4xl font-bold text-white mb-6 leading-tight flex items-center gap-3">
+              {{ lang.t().bio.title }}
+              <div class="h-1 w-12 bg-indigo-600 rounded-full"></div>
+            </h2>
+            <div class="space-y-6 text-slate-400 text-lg leading-relaxed">
+              <p>{{ lang.t().bio.p1 }}</p>
+              <p>{{ lang.t().bio.p2 }}</p>
+            </div>
           </div>
-          <div class="p-6 bg-slate-950 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center">
-            <div class="text-3xl font-bold text-purple-500 mb-2">IoT/3D</div>
-            <div class="text-sm text-slate-400">Specialist</div>
-          </div>
-          <div class="p-6 bg-slate-950 rounded-xl border border-slate-800 flex flex-col items-center justify-center text-center">
-            <div class="text-3xl font-bold text-cyan-500 mb-2">MSc</div>
-            <div class="text-sm text-slate-400">Software Eng.</div>
+          
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-slate-800/50">
+            <div class="p-5 bg-slate-950/50 rounded-xl border border-slate-800/50 flex flex-col items-center justify-center text-center hover:bg-slate-900 transition-colors">
+              <div class="text-3xl font-bold text-indigo-500 mb-1">{{ lang.t().bio.stats.exp }}</div>
+              <div class="text-xs text-slate-500 uppercase tracking-wider">Experience</div>
+            </div>
+            <div class="p-5 bg-slate-950/50 rounded-xl border border-slate-800/50 flex flex-col items-center justify-center text-center hover:bg-slate-900 transition-colors">
+              <div class="text-3xl font-bold text-purple-500 mb-1">IoT/3D</div>
+              <div class="text-xs text-slate-500 uppercase tracking-wider">{{ lang.t().bio.stats.stack }}</div>
+            </div>
+            <div class="p-5 bg-slate-950/50 rounded-xl border border-slate-800/50 flex flex-col items-center justify-center text-center hover:bg-slate-900 transition-colors">
+              <div class="text-3xl font-bold text-cyan-500 mb-1">MSc</div>
+              <div class="text-xs text-slate-500 uppercase tracking-wider">{{ lang.t().bio.stats.location }}</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </section>
+  <section class="py-20 border-y border-slate-800/50 bg-slate-950/50">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="mb-12">
+      <h2 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400">
+        {{ lang.t().stacks.title }}
+      </h2>
+      <p class="text-slate-400 mt-2">
+        {{ lang.t().stacks.description }}
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 hover:border-indigo-500/50 transition-colors group">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-3 rounded-lg bg-indigo-500/10 text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white">Backend Engineering</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-pill border-indigo-500/30 text-indigo-300">NestJS</span>
+          <span class="skill-pill border-purple-500/30 text-purple-300">.NET Core</span>
+          <span class="skill-pill border-slate-700 text-slate-400">PostgreSQL</span>
+          <span class="skill-pill border-slate-700 text-slate-400">RabbitMQ</span>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 hover:border-pink-500/50 transition-colors group">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-3 rounded-lg bg-pink-500/10 text-pink-400 group-hover:bg-pink-500 group-hover:text-white transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white">Frontend & 3D</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-pill border-pink-500/30 text-pink-300">Angular 18+</span>
+          <span class="skill-pill border-orange-500/30 text-orange-300">Three.js</span>
+          <span class="skill-pill border-cyan-500/30 text-cyan-300">Tailwind</span>
+          <span class="skill-pill border-slate-700 text-slate-400">Signals</span>
+        </div>
+      </div>
+
+      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 hover:border-emerald-500/50 transition-colors group">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="p-3 rounded-lg bg-emerald-500/10 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-white transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+          </div>
+          <h3 class="text-xl font-semibold text-white">Mobile & MDM</h3>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-pill border-emerald-500/30 text-emerald-300">AOSP</span>
+          <span class="skill-pill border-green-500/30 text-green-300">Google AMAPI</span>
+          <span class="skill-pill border-yellow-500/30 text-yellow-300">AWS IoT</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
 
   <!-- CASES SECTION -->
   <section id="projects" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-    <div class="mb-12">
-      <h2 class="text-3xl lg:text-4xl font-bold text-white">{{ lang.t().cases.title }}</h2>
-      <div class="h-1 w-20 bg-indigo-600 mt-4 rounded-full"></div>
+    <div class="mb-12 flex items-end justify-between">
+      <div>
+        <h2 class="text-3xl lg:text-4xl font-bold text-white">{{ lang.t().cases.title }}</h2>
+        <div class="h-1 w-20 bg-indigo-600 mt-4 rounded-full"></div>
+      </div>
     </div>
 
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 h-auto">
@@ -99,6 +190,6 @@
   </section>
 </main>
 
-<footer class="border-t border-slate-800 bg-slate-950 py-8 text-center">
+<footer class="border-t border-slate-800 bg-slate-950 py-8 text-center relative z-10">
   <p class="text-slate-500 text-sm font-mono">{{ lang.t().footer }}</p>
 </footer>

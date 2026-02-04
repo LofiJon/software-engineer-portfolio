@@ -35,6 +35,12 @@ Unlike standard portfolio templates, this application was engineered to demonstr
 
 ---
 
+### 📱 Mobile OS & Fleet Orchestration
+> Deep expertise in managing enterprise Android ecosystems.
+![Android](https://img.shields.io/badge/Android_AOSP-3DDC84?style=flat&logo=android&logoColor=white)
+![Google Cloud](https://img.shields.io/badge/Google_AMAPI-4285F4?style=flat&logo=googlecloud&logoColor=white)
+**Skills:** `Custom ROMs` `Kiosk Mode` `Zero-Touch Provisioning` `MQTT/IoT`
+
 ## 📂 Architecture & Folder Structure
 
 The project follows a **Feature-Based Architecture** to ensure scalability:

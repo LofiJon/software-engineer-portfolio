@@ -1,25 +1,34 @@
 {
-  "hash": "c960849d",
-  "configHash": "4c276363",
-  "lockfileHash": "00b34b20",
-  "browserHash": "3aeac632",
+  "hash": "f9d338e8",
+  "configHash": "04c2d204",
+  "lockfileHash": "5bed1d82",
+  "browserHash": "e9f8c9b9",
   "optimized": {
     "@angular/core": {
       "src": "../../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "af59f91b",
+      "fileHash": "a98631a1",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "133ebffa",
+      "fileHash": "43cd62c0",
+      "needsInterop": false
+    },
+    "three": {
+      "src": "../../../../../../node_modules/three/build/three.module.js",
+      "file": "three.js",
+      "fileHash": "977b5153",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-GRIJKDFQ": {
-      "file": "chunk-GRIJKDFQ.js"
+    "chunk-2IHFJ2FH": {
+      "file": "chunk-2IHFJ2FH.js"
+    },
+    "chunk-GOMI4DH3": {
+      "file": "chunk-GOMI4DH3.js"
     }
   }
 }
