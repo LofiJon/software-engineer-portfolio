@@ -24,14 +24,23 @@ Unlike standard portfolio templates, this application was engineered to demonstr
 
 ---
 
-## 🛠 Tech Stack
+## 🛠 Tech Ecosystem
 
-* **Framework:** Angular 18+
-* **Language:** TypeScript 5+
-* **Styling:** SCSS Modules / TailwindCSS (Configurable)
-* **3D Graphics:** Three.js
-* **Build Tool:** Angular CLI / Vite
-* **Deployment:** Vercel / Netlify (CI/CD Integrated)
+As a Polyglot Engineer, I navigate across multiple stacks, choosing the best tool for the architecture.
+
+### 🚀 Core Specialist Stack (My Daily Drivers)
+> High-performance architectures I design and maintain daily.
+![Angular](https://img.shields.io/badge/Angular-18%2B-dd0031?style=flat&logo=angular)
+![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs)
+![.NET](https://img.shields.io/badge/.NET-512BD4?style=flat&logo=dotnet)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql)
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazon-aws)
+
+### ⚔️ Polyglot Experience (Production Ready)
+> Technologies I have shipped to production in diverse environments.
+**Frontend:** `React` `Vue.js` `Three.js`
+**Backend:** `Spring Boot (Java)` `Django (Python)` `PHP`
+**Data:** `MongoDB` `MySQL` `Redis` `RabbitMQ`
 
 ---
 
