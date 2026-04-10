@@ -20,12 +20,20 @@ export interface TranslationData {
   stacks: {
     title: string;
     description: string;
+    items: StackCard[];
   };
   cases: {
     title: string;
     items: CaseStudy[];
   };
   footer: string;
+}
+
+export interface StackCard {
+  title: string;
+  icon: string;
+  tags: string[];
+  color: string;
 }
 
 export interface CaseStudy {
@@ -41,23 +49,49 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
     hero: {
       badge: "Engenharia Sólida",
       headline: "Engenharia de Software de Ponta a Ponta: Do 3D à Nuvem",
-      subtitle: "Fullstack Engineer. Especialista em Sistemas Distribuídos, IoT e MDM. Transformando requisitos críticos em código sólido.",
+      subtitle: "Fullstack Engineer em transição para IA. Especialista em Sistemas Distribuídos, IoT e Machine Learning. Transformando requisitos críticos em código sólido.",
       cta: "Ver Estudos de Caso"
     },
     bio: {
-      title: "O Flow do Engenheiro",
-      p1: `Aos ${new Date().getFullYear() - 1999} anos, sou um Engenheiro de Software Manauara que encontra o equilíbrio perfeito entre a batida calma do Lo-fi Hip Hop e o ritmo acelerado de sistemas críticos. Sou um desenvolvedor T-Shaped: minha base em Angular e .NET sustenta uma versatilidade que vai da renderização pixel-perfect com Three.js à responsabilidade de integrações fiscais com a SEFAZ.`,
-      p2: "No Instituto Eldorado, lidero arquiteturas IoT que orquestram milhares de dispositivos via AOSP e Google AMAPI. Acredito que a excelência nasce da união entre teoria e prática: com Bacharelado e Pós em Engenharia, agora expando fronteiras na Pós em IA Aplicada (UNIPDS), focado em unir a robustez da engenharia clássica com a inovação da Inteligência Artificial.",
+      title: "Engenheiro Full-Stack & IA",
+      p1: `Sou um Engenheiro de Software de Manaus com 5 anos de experiência em sistemas distribuídos, IoT, arquitetura de nuvem e desenvolvimento fullstack. Começo projetos do zero e os levo até produção — da modelagem do banco de dados ao deploy em AWS, passando por front-end 3D com Three.js e integrações fiscais críticas com a SEFAZ.`,
+      p2: "Na MB Consultoria iniciei minha trajetória em e-commerce. No Instituto Creathus evoluí para arquitetura de sistemas, soluções IoT com RabbitMQ e MQTT e integrações fiscais com tolerância zero a falhas. No Instituto Eldorado, lidero o gerenciamento de frotas de dispositivos Android customizados via AOSP e AMAPI, integrando AWS IoT, SQS e pipelines de dados em alta escala. Formado em Engenharia da Computação, com Pós em Engenharia de Software e cursando Pós em IA Aplicada — aprofundando LLMs, RAG, LangChain e Prompt Engineering.",
       stats: {
         exp: "5+ Anos de Exp.",
         stack: "Angular, .NET, AOSP, AWS",
         location: "Manaus, AM"
       },
     },
-     stacks: {
-        title: "Arsenal Tecnológico",
-        description: "Uma abordagem agnóstica para resolver problemas complexos."
-      },
+    stacks: {
+      title: "Arsenal Tecnológico",
+      description: "Uma abordagem agnóstica para resolver problemas complexos.",
+      items: [
+        {
+          title: "Frontend",
+          icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+          tags: ["Angular", "TypeScript", "Three.js", "RxJS", "NgRx"],
+          color: "blue"
+        },
+        {
+          title: "Backend",
+          icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+          tags: [".NET", "Node.js", "NestJS", "REST", "GraphQL"],
+          color: "purple"
+        },
+        {
+          title: "IoT & Cloud",
+          icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>`,
+          tags: ["AWS IoT", "AOSP", "AMAPI", "RabbitMQ", "Docker"],
+          color: "green"
+        },
+        {
+          title: "AI & LLMs",
+          icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>`,
+          tags: ["LangChain", "RAG", "Prompt Engineering", "MCP", "Python"],
+          color: "amber"
+        }
+      ]
+    },
     cases: {
       title: "Desafios Técnicos & Soluções",
       items: [
@@ -90,23 +124,49 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
     hero: {
       badge: "Solid Engineering",
       headline: "End-to-End Software Engineering: From 3D to the Cloud",
-      subtitle: "Fullstack Engineer. Specialist in Distributed Systems, IoT, and MDM. Transforming critical requirements into solid code.",
+      subtitle: "Fullstack Engineer transitioning to AI. Specialist in Distributed Systems, IoT, and Machine Learning. Transforming critical requirements into solid code.",
       cta: "View Case Studies"
     },
     bio: {
-      title: "The Engineer's Flow",
-      p1: `At ${new Date().getFullYear() - 1999}, I am a Software Engineer from Manaus who balances the calm beat of Lo-fi Hip Hop with the fast pace of critical systems. I am a T-Shaped developer: my core strength in Angular and .NET supports a versatility ranging from pixel-perfect 3D rendering (Three.js) to critical fiscal integrations.`,
-      p2: "At Instituto Eldorado, I lead IoT architectures orchestrating thousands of devices via AOSP and Google AMAPI. I believe excellence comes from uniting theory and practice: holding a Bachelor's and Post-Grad in Engineering, I am now expanding boundaries with a specialization in Applied AI (UNIPDS), merging robust engineering with AI innovation.",
+      title: "Full-Stack Engineer & AI",
+      p1: `I am a Software Engineer from Manaus with 5 years of experience in distributed systems, IoT, cloud architecture, and fullstack development. I take projects from zero to production — from database modeling to AWS deployment, through 3D front-end with Three.js and critical fiscal integrations.`,
+      p2: "At MB Consultoria I started my career in e-commerce. At Instituto Creathus I evolved into systems architecture, IoT solutions with RabbitMQ and MQTT, and fiscal integrations with zero tolerance for failure. At Instituto Eldorado, I lead the management of custom Android device fleets via AOSP and AMAPI, integrating AWS IoT, SQS and data pipelines at scale. I hold a Bachelor's in Computer Engineering, a Post-Grad in Software Engineering, and am currently pursuing a Post-Grad in Applied AI — deepening expertise in LLMs, RAG, LangChain and Prompt Engineering.",
       stats: {
         exp: "5+ Years Exp.",
         stack: "Angular, .NET, AOSP, AWS",
         location: "Manaus, Brazil"
       }
     },
-      stacks: {
-        title: "Tech Arsenal",
-        description: "An agnostic approach to solving complex problems."
-      },
+    stacks: {
+      title: "Tech Arsenal",
+      description: "An agnostic approach to solving complex problems.",
+      items: [
+        {
+          title: "Frontend",
+          icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
+          tags: ["Angular", "TypeScript", "Three.js", "RxJS", "NgRx"],
+          color: "blue"
+        },
+        {
+          title: "Backend",
+          icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+          tags: [".NET", "Node.js", "NestJS", "REST", "GraphQL"],
+          color: "purple"
+        },
+        {
+          title: "IoT & Cloud",
+          icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/></svg>`,
+          tags: ["AWS IoT", "AOSP", "AMAPI", "RabbitMQ", "Docker"],
+          color: "green"
+        },
+        {
+          title: "AI & LLMs",
+          icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>`,
+          tags: ["LangChain", "RAG", "Prompt Engineering", "MCP", "Python"],
+          color: "amber"
+        }
+      ]
+    },
     cases: {
       title: "Technical Challenges & Solutions",
       items: [
