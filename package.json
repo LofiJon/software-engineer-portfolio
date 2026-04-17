@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "ng serve",
-    "build": "ng build",
-    "preview": "ng serve --configuration=production"
+    "set-env": "node scripts/set-env.mjs",
+    "dev": "npm run set-env && ng serve",
+    "build": "npm run set-env && ng build",
+    "preview": "npm run set-env && ng serve --configuration=production"
   },
   "dependencies": {
     "@angular/build": "^21.1.0",
