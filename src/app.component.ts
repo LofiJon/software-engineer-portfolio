@@ -1,8 +1,9 @@
 import { Component, inject, ChangeDetectionStrategy, OnInit } from '@angular/core';
-import { Meta, Title } from '@angular/platform-browser'; // <--- Importar Meta e Title
+import { Meta, Title } from '@angular/platform-browser';
 import { TranslationService } from './components/services/translation.service';
 import { CaseCardComponent } from './components/case-card/case-card.component';
 import { ThreeVizComponent } from './components/three-viz/three-viz.component';
+import { ENV } from './env';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ import { ThreeVizComponent } from './components/three-viz/three-viz.component';
 })
 export class AppComponent implements OnInit {
   public lang = inject(TranslationService);
+  public readonly env = ENV;
   private meta = inject(Meta);             
   private title = inject(Title);           
 
