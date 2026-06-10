@@ -6,28 +6,82 @@ import * as THREE from 'three';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="relative w-full h-64 md:h-full bg-black rounded-xl overflow-hidden border border-slate-800 shadow-2xl flex items-center justify-center cursor-crosshair">
-      <canvas #canvas class="w-full h-full outline-none"></canvas>
-      <div class="absolute bottom-4 left-4 bg-black/60 backdrop-blur px-3 py-1 rounded text-xs text-red-400 font-mono border border-red-500/30 flex items-center gap-2">
-        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-        DEFENSE SYSTEM: ACTIVE
-      </div>
-      <div class="absolute top-4 right-4 text-[10px] text-slate-500 font-mono">
-        {{ fps() }} FPS
-      </div>
+    <div class="relative w-full h-[600px] md:h-screen bg-[#020617] overflow-hidden flex items-center justify-center selection:bg-[#06b6d4] selection:text-white" style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
+       
+       <!-- CSS Grain & Texture -->
+       <div class="absolute inset-0 pointer-events-none opacity-[0.05] z-10" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E'); mix-blend-mode: screen;"></div>
+       
+       <!-- Vignette -->
+       <div class="absolute inset-0 pointer-events-none z-10" style="background: radial-gradient(circle at center, transparent 20%, #020617 120%);"></div>
+
+       <canvas #canvas class="w-full h-full outline-none z-0"></canvas>
+       
+       <!-- Bold Brutalist UI -->
+       <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-20 p-6 md:p-12 flex flex-col justify-between">
+          
+          <div class="flex justify-between items-start w-full">
+            <div class="flex flex-col">
+              <h1 class="text-[#E0E0E0] text-5xl md:text-8xl font-black tracking-tighter leading-none uppercase mix-blend-difference" style="text-shadow: 0 0 40px rgba(255,255,255,0.2);">
+                Void<br/>Anomaly
+              </h1>
+              <div class="flex items-center gap-4 mt-6">
+                 <div class="w-16 h-[2px] bg-[#06b6d4]"></div>
+                 <div class="text-[#94a3b8] text-[10px] md:text-xs font-bold tracking-[0.4em] uppercase">Sector 7G // Containment</div>
+              </div>
+            </div>
+            
+            <div class="text-right flex flex-col items-end">
+              <div class="text-[#E0E0E0] text-4xl md:text-6xl font-black tracking-tighter mix-blend-difference">{{ fps() }}</div>
+              <div class="text-[#06b6d4] text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] mt-1">Frames Per Second</div>
+              
+              <div class="mt-8 flex flex-col items-end gap-1 text-[9px] md:text-[10px] text-[#64748b] tracking-[0.2em] font-mono">
+                 <div>SYS.MEM: OPTIMAL</div>
+                 <div>TEMP: 3.4K</div>
+                 <div class="text-[#06b6d4] animate-pulse mt-2">DANGER: CRITICAL MASS</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="flex flex-col md:flex-row justify-between items-end w-full gap-6 md:gap-0">
+             <div class="max-w-sm">
+                <p class="text-[#94a3b8] text-[10px] md:text-xs leading-relaxed font-medium tracking-wide mix-blend-difference border-l-2 border-[#1e293b] pl-4">
+                   OBSERVATION PROTOCOL ALPHA.<br/>
+                   THE GEOMETRIC ENTITY EXHIBITS NON-EUCLIDEAN PROPERTIES AND SPONTANEOUS ENERGY FLUCTUATIONS.
+                   MAINTAIN SAFE DISTANCE.
+                </p>
+             </div>
+             
+             <div class="flex flex-col items-end gap-2 font-mono text-[9px] md:text-xs text-[#64748b] tracking-[0.1em]">
+                <div class="flex gap-4">
+                   <span>AXIS.X</span>
+                   <span class="text-[#E0E0E0] w-12 text-right">{{ camPos().x }}</span>
+                </div>
+                <div class="flex gap-4">
+                   <span>AXIS.Y</span>
+                   <span class="text-[#E0E0E0] w-12 text-right">{{ camPos().y }}</span>
+                </div>
+                <div class="flex gap-4">
+                   <span>AXIS.Z</span>
+                   <span class="text-[#E0E0E0] w-12 text-right">{{ camPos().z }}</span>
+                </div>
+             </div>
+          </div>
+       </div>
     </div>
   `
 })
 export class ThreeVizComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas') private canvasRef!: ElementRef<HTMLCanvasElement>;
   fps = signal(0);
+  camPos = signal({ x: '0.00', y: '0.00', z: '0.00' });
 
   private renderer!: THREE.WebGLRenderer;
   private scene!: THREE.Scene;
   private camera!: THREE.PerspectiveCamera;
 
-  private deathStar!: THREE.Group;
-  private ships: { mesh: THREE.Group; data: any }[] = [];
+  private anomalyMat!: THREE.ShaderMaterial;
+  private cages: THREE.Object3D[] = [];
+  private particles!: THREE.Points;
 
   private animationId = 0;
   private lastFpsTime = 0;
@@ -48,30 +102,18 @@ export class ThreeVizComponent implements AfterViewInit, OnDestroy {
     const h = canvas.clientHeight;
 
     this.scene = new THREE.Scene();
+    this.scene.fog = new THREE.FogExp2(0x020617, 0.04);
 
-    this.camera = new THREE.PerspectiveCamera(55, w / h, 0.1, 500);
-    this.camera.position.set(0, 0.8, 5.5);
-    this.camera.lookAt(0, 0, 0);
+    this.camera = new THREE.PerspectiveCamera(45, w / h, 0.1, 100);
+    this.camera.position.set(0, 0, 12);
 
     this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
     this.renderer.setSize(w, h);
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // Lighting: strong directional sun + dim fill
-    const sun = new THREE.DirectionalLight(0xffffff, 3.5);
-    sun.position.set(8, 4, 6);
-    this.scene.add(sun);
-
-    const fill = new THREE.DirectionalLight(0x223344, 0.6);
-    fill.position.set(-6, -3, -4);
-    this.scene.add(fill);
-
-    const ambient = new THREE.AmbientLight(0x090d14, 1);
-    this.scene.add(ambient);
-
-    this.createStarField();
-    this.createDeathStar();
-    this.createFleet(5, 3);
+    this.createAnomaly();
+    this.createCages();
+    this.createParticles();
 
     new ResizeObserver(() => {
       const nw = canvas.clientWidth;
@@ -84,365 +126,213 @@ export class ThreeVizComponent implements AfterViewInit, OnDestroy {
     this.ngZone.runOutsideAngular(() => this.animate());
   }
 
-  private createStarField() {
-    const count = 2000;
-    const pos = new Float32Array(count * 3);
-    for (let i = 0; i < count; i++) {
-      const phi = Math.acos(2 * Math.random() - 1);
-      const theta = Math.random() * Math.PI * 2;
-      const r = 100 + Math.random() * 150;
-      pos[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
-      pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      pos[i * 3 + 2] = r * Math.cos(phi);
-    }
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    this.scene.add(new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.18, sizeAttenuation: true })));
-  }
+  private createAnomaly() {
+    const geometry = new THREE.IcosahedronGeometry(2.5, 40).toNonIndexed();
+    
+    const noise3D = `
+      vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+      vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
+      vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+      float snoise(vec3 v) {
+        const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+        const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+        vec3 i  = floor(v + dot(v, C.yyy));
+        vec3 x0 = v - i + dot(i, C.xxx);
+        vec3 g = step(x0.yzx, x0.xyz);
+        vec3 l = 1.0 - g;
+        vec3 i1 = min(g.xyz, l.zxy);
+        vec3 i2 = max(g.xyz, l.zxy);
+        vec3 x1 = x0 - i1 + C.xxx;
+        vec3 x2 = x0 - i2 + C.yyy;
+        vec3 x3 = x0 - D.yyy;
+        i = mod289(i);
+        vec4 p = permute(permute(permute(
+                   i.z + vec4(0.0, i1.z, i2.z, 1.0))
+                 + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+                 + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+        float n_ = 0.142857142857;
+        vec3 ns = n_ * D.wyz - D.xzx;
+        vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+        vec4 x_ = floor(j * ns.z);
+        vec4 y_ = floor(j - 7.0 * x_);
+        vec4 x = x_ *ns.x + ns.yyyy;
+        vec4 y = y_ *ns.x + ns.yyyy;
+        vec4 h = 1.0 - abs(x) - abs(y);
+        vec4 b0 = vec4(x.xy, y.xy);
+        vec4 b1 = vec4(x.zw, y.zw);
+        vec4 s0 = floor(b0)*2.0 + 1.0;
+        vec4 s1 = floor(b1)*2.0 + 1.0;
+        vec4 sh = -step(h, vec4(0.0));
+        vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
+        vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+        vec3 p0 = vec3(a0.xy,h.x);
+        vec3 p1 = vec3(a0.zw,h.y);
+        vec3 p2 = vec3(a1.xy,h.z);
+        vec3 p3 = vec3(a1.zw,h.w);
+        vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+        p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+        vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+        m = m * m;
+        return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+      }
+    `;
 
-  private createDeathStar() {
-    this.deathStar = new THREE.Group();
-
-    // Surface with procedural panel lines via shader
-    const sphereGeo = new THREE.SphereGeometry(1.5, 96, 96);
-    const panelMat = new THREE.ShaderMaterial({
+    this.anomalyMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: { value: 0 }
+      },
       vertexShader: `
-        varying vec2 vUv;
-        varying vec3 vNormal;
+        uniform float uTime;
+        varying vec3 vViewPosition;
+        varying float vNoise;
+        ${noise3D}
         void main() {
-          vUv = uv;
-          vNormal = normalize(normalMatrix * normal);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          // Add complex noise displacement
+          float n1 = snoise(position * 1.2 + uTime * 0.4);
+          float n2 = snoise(position * 2.8 - uTime * 0.6) * 0.5;
+          float noise = n1 + n2;
+          vNoise = noise;
+          
+          vec3 displaced = position + normal * (noise * 0.8);
+          vec4 mvPosition = modelViewMatrix * vec4(displaced, 1.0);
+          vViewPosition = -mvPosition.xyz;
+          gl_Position = projectionMatrix * mvPosition;
         }
       `,
       fragmentShader: `
-        varying vec2 vUv;
-        varying vec3 vNormal;
-
-        float panelLine(vec2 uv, float scale, float w) {
-          vec2 g = fract(uv * scale);
-          vec2 fw = fwidth(uv * scale);
-          vec2 d = smoothstep(fw * w, fw * (w + 1.0), min(g, 1.0 - g));
-          return 1.0 - min(d.x, d.y);
-        }
-
+        uniform float uTime;
+        varying vec3 vViewPosition;
+        varying float vNoise;
+        
         void main() {
-          // Two panel scales for detail variation
-          float lines = panelLine(vUv, 20.0, 0.6) * 0.5
-                      + panelLine(vUv, 6.0,  0.5) * 0.35;
-
-          // Dark crease color
-          vec3 base = vec3(0.30, 0.33, 0.38);
-          vec3 dark = vec3(0.10, 0.11, 0.14);
-          vec3 col = mix(base, dark, lines);
-
-          // Diffuse lighting
-          vec3 lightDir = normalize(vec3(8.0, 4.0, 6.0));
-          float diff = clamp(dot(vNormal, lightDir), 0.0, 1.0);
-          float lighting = 0.12 + diff * 0.88;
-          col *= lighting;
-
-          // Subtle specular
-          vec3 viewDir = vec3(0.0, 0.0, 1.0);
-          vec3 halfV = normalize(lightDir + viewDir);
-          float spec = pow(clamp(dot(vNormal, halfV), 0.0, 1.0), 40.0) * 0.15;
-          col += spec;
-
+          // Flat shading normal computation
+          vec3 fdx = dFdx(vViewPosition);
+          vec3 fdy = dFdy(vViewPosition);
+          vec3 normal = normalize(cross(fdx, fdy));
+          
+          vec3 lightDir1 = normalize(vec3(1.0, 1.0, 1.0));
+          vec3 lightDir2 = normalize(vec3(-1.0, -0.5, -1.0));
+          
+          float diff1 = max(dot(normal, lightDir1), 0.0);
+          float diff2 = max(dot(normal, lightDir2), 0.0);
+          
+          vec3 baseColor = vec3(0.01, 0.02, 0.09); // Deep slate void
+          vec3 highlightColor = vec3(0.02, 0.71, 0.83); // #06b6d4 (Cyan)
+          vec3 rimColor = vec3(0.8, 0.95, 1.0); // Ghostly cyan-white
+          
+          // Noise-based glow
+          float glowMask = smoothstep(0.4, 1.2, vNoise);
+          vec3 col = mix(baseColor, highlightColor, glowMask);
+          
+          // Apply lighting
+          col += diff1 * vec3(0.1, 0.15, 0.2) + diff2 * vec3(0.02, 0.05, 0.1);
+          
+          // Fresnel rim lighting
+          vec3 viewDir = normalize(vViewPosition);
+          float fresnel = 1.0 - max(dot(viewDir, normal), 0.0);
+          fresnel = smoothstep(0.5, 1.0, fresnel);
+          col += rimColor * fresnel * 0.8 * (1.0 - glowMask);
+          
           gl_FragColor = vec4(col, 1.0);
         }
       `,
-      extensions: { derivatives: true } as any,
+      extensions: { derivatives: true } as any
     });
-    this.deathStar.add(new THREE.Mesh(sphereGeo, panelMat));
 
-    // Equatorial trench
-    const trenchMat = new THREE.MeshStandardMaterial({ color: 0x050810, roughness: 1, metalness: 0 });
-    const trench = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.065, 10, 200), trenchMat);
-    trench.rotation.x = Math.PI / 2;
-    this.deathStar.add(trench);
-
-    // Inner trench groove
-    const innerTrench = new THREE.Mesh(new THREE.TorusGeometry(1.5, 0.028, 8, 200), trenchMat);
-    innerTrench.rotation.x = Math.PI / 2;
-    innerTrench.scale.setScalar(0.955);
-    this.deathStar.add(innerTrench);
-
-    this.addSuperlaser();
-    this.scene.add(this.deathStar);
+    const mesh = new THREE.Mesh(geometry, this.anomalyMat);
+    this.scene.add(mesh);
   }
 
-  private addSuperlaser() {
-    // Position on northern hemisphere, slightly left — canonical Death Star look
-    const dishDir = new THREE.Vector3(-0.55, 0.72, 1.0).normalize();
-    const dishPos = dishDir.clone().multiplyScalar(1.5);
+  private createCages() {
+    // Outer wireframe cage
+    const cageGeo1 = new THREE.IcosahedronGeometry(4.2, 1).toNonIndexed();
+    const edges1 = new THREE.EdgesGeometry(cageGeo1);
+    const mat1 = new THREE.LineBasicMaterial({ color: 0x1e293b, transparent: true, opacity: 0.8 });
+    const cage1 = new THREE.LineSegments(edges1, mat1);
+    this.scene.add(cage1);
+    this.cages.push(cage1);
 
-    // Outer rim ring
-    const rimMat = new THREE.MeshStandardMaterial({ color: 0x374151, roughness: 0.5, metalness: 0.75 });
-    const rim = new THREE.Mesh(new THREE.TorusGeometry(0.43, 0.045, 20, 80), rimMat);
-    rim.position.copy(dishPos);
-    rim.lookAt(0, 0, 0);
-    this.deathStar.add(rim);
+    // Inner glowing cage
+    const cageGeo2 = new THREE.IcosahedronGeometry(3.6, 0).toNonIndexed();
+    const edges2 = new THREE.EdgesGeometry(cageGeo2);
+    const mat2 = new THREE.LineBasicMaterial({ color: 0x06b6d4, transparent: true, opacity: 0.3 });
+    const cage2 = new THREE.LineSegments(edges2, mat2);
+    this.scene.add(cage2);
+    this.cages.push(cage2);
 
-    // Concave bowl (BackSide cap of a partial sphere)
-    const bowlGeo = new THREE.SphereGeometry(0.42, 48, 48, 0, Math.PI * 2, 0, Math.PI * 0.45);
-    const bowlMat = new THREE.MeshStandardMaterial({
-      color: 0x0d1117, roughness: 0.95, metalness: 0.05, side: THREE.BackSide
-    });
-    const bowl = new THREE.Mesh(bowlGeo, bowlMat);
-    bowl.position.copy(dishPos);
-    bowl.lookAt(0, 0, 0);
-    this.deathStar.add(bowl);
-
-    // Concentric rings inside the dish
-    const ringRadii = [0.32, 0.21, 0.11];
-    const ringMat = new THREE.MeshStandardMaterial({ color: 0x4b5563, roughness: 0.6, metalness: 0.8 });
-    for (const r of ringRadii) {
-      const ring = new THREE.Mesh(new THREE.TorusGeometry(r, 0.013, 10, 60), ringMat);
-      ring.position.copy(dishPos);
-      ring.lookAt(0, 0, 0);
-      this.deathStar.add(ring);
-    }
-
-    // 8 spokes radiating from center
-    const spokeMat = new THREE.MeshStandardMaterial({ color: 0x374151, roughness: 0.7 });
-    for (let i = 0; i < 8; i++) {
-      const angle = (i / 8) * Math.PI * 2;
-      const spokeGeo = new THREE.BoxGeometry(0.008, 0.38, 0.008);
-      const spoke = new THREE.Mesh(spokeGeo, spokeMat);
-      spoke.position.copy(dishPos);
-      spoke.lookAt(0, 0, 0);
-      // Rotate around the dish's local Z after aligning
-      const offset = dishDir.clone().multiplyScalar(0.02);
-      spoke.position.add(offset);
-      spoke.rotateOnWorldAxis(dishDir, angle);
-      this.deathStar.add(spoke);
-    }
-
-    // Central emitter core
-    const coreMat = new THREE.MeshBasicMaterial({ color: 0x00ff88 });
-    const core = new THREE.Mesh(new THREE.SphereGeometry(0.055, 16, 16), coreMat);
-    core.position.copy(dishPos);
-    this.deathStar.add(core);
-
-    // Glow point light at dish
-    const dishLight = new THREE.PointLight(0x00ff88, 2, 1.8);
-    dishLight.position.copy(dishPos);
-    this.deathStar.add(dishLight);
-  }
-
-  // --- Ships ---
-
-  private createFleet(tieCount: number, xwingCount: number) {
-    for (let i = 0; i < tieCount; i++) {
-      const mesh = this.makeTIEFighter();
-      const data = {
-        speed: 0.007 + Math.random() * 0.010,
-        radius: 2.3 + Math.random() * 1.1,
-        angle: Math.random() * Math.PI * 2,
-        orbitAxis: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize(),
-        laserColor: 0x00ee44,
-        laserEvery: 30 + Math.floor(Math.random() * 50),
-        frame: Math.floor(Math.random() * 120),
-      };
-      mesh.userData = data;
-      this.ships.push({ mesh, data });
-      this.scene.add(mesh);
-    }
-
-    for (let i = 0; i < xwingCount; i++) {
-      const mesh = this.makeXWing();
-      const data = {
-        speed: 0.011 + Math.random() * 0.014,
-        radius: 2.6 + Math.random() * 1.3,
-        angle: Math.random() * Math.PI * 2,
-        orbitAxis: new THREE.Vector3(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize(),
-        laserColor: 0xff2200,
-        laserEvery: 20 + Math.floor(Math.random() * 40),
-        frame: Math.floor(Math.random() * 120),
-      };
-      mesh.userData = data;
-      this.ships.push({ mesh, data });
-      this.scene.add(mesh);
+    // Orbital data rings
+    const ringMat = new THREE.MeshBasicMaterial({ color: 0x334155, side: THREE.DoubleSide, transparent: true, opacity: 0.5 });
+    for (let i = 0; i < 3; i++) {
+      const ringGeo = new THREE.RingGeometry(5 + i * 0.5, 5.02 + i * 0.5, 64);
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.rotation.x = Math.PI / 2 + (Math.random() - 0.5) * 0.5;
+      ring.rotation.y = (Math.random() - 0.5) * 0.5;
+      this.scene.add(ring);
+      this.cages.push(ring);
     }
   }
 
-  private makeTIEFighter(): THREE.Group {
-    const g = new THREE.Group();
-    const s = 0.11;
-
-    // Central ball cockpit
-    const ball = new THREE.Mesh(
-      new THREE.SphereGeometry(0.5 * s, 12, 12),
-      new THREE.MeshStandardMaterial({ color: 0x374151, roughness: 0.5, metalness: 0.6 })
-    );
-    g.add(ball);
-
-    // Y-struts connecting pod to panels
-    const strutMat = new THREE.MeshStandardMaterial({ color: 0x4b5563, roughness: 0.6 });
-    for (const side of [-1, 1]) {
-      for (const vAngle of [-0.4, 0.4]) {
-        const strut = new THREE.Mesh(new THREE.CylinderGeometry(0.02 * s, 0.02 * s, 0.75 * s, 5), strutMat);
-        strut.rotation.z = Math.PI / 2 + vAngle * side;
-        strut.position.set(side * 0.45 * s, vAngle * 0.2 * s, 0);
-        g.add(strut);
-      }
+  private createParticles() {
+    const count = 2000;
+    const pos = new Float32Array(count * 3);
+    for(let i=0; i<count; i++) {
+      pos[i*3] = (Math.random() - 0.5) * 25;
+      pos[i*3+1] = (Math.random() - 0.5) * 25;
+      pos[i*3+2] = (Math.random() - 0.5) * 25;
     }
-
-    // Hexagonal solar panels (BoxGeometry approximation)
-    const panelMat = new THREE.MeshStandardMaterial({ color: 0x1a2332, roughness: 0.9 });
-    const gridMat = new THREE.MeshBasicMaterial({ color: 0x2d4060, wireframe: true });
-    for (const side of [-1, 1]) {
-      const panel = new THREE.Mesh(new THREE.BoxGeometry(0.04 * s, 1.3 * s, 1.0 * s), panelMat);
-      panel.position.x = side * 0.88 * s;
-      g.add(panel);
-
-      const grid = new THREE.Mesh(new THREE.BoxGeometry(0.041 * s, 1.31 * s, 1.01 * s), gridMat);
-      grid.position.x = side * 0.88 * s;
-      g.add(grid);
-    }
-
-    // Ion engine glow at back
-    const engineLight = new THREE.PointLight(0x4488ff, 1.2, 0.3 * s);
-    engineLight.position.set(0, 0, -0.55 * s);
-    g.add(engineLight);
-
-    return g;
-  }
-
-  private makeXWing(): THREE.Group {
-    const g = new THREE.Group();
-    const s = 0.10;
-
-    const metalMat  = new THREE.MeshStandardMaterial({ color: 0xb0b8c8, roughness: 0.75 });
-    const darkMat   = new THREE.MeshStandardMaterial({ color: 0x4a4a4a, roughness: 0.8 });
-    const glassMat  = new THREE.MeshStandardMaterial({ color: 0x1e40af, roughness: 0.2, metalness: 0.1 });
-    const engineMat = new THREE.MeshStandardMaterial({ color: 0x555555, roughness: 0.6 });
-
-    // Fuselage
-    const fuselage = new THREE.Mesh(new THREE.CylinderGeometry(0.09 * s, 0.13 * s, 1.6 * s, 8), metalMat);
-    fuselage.rotation.z = Math.PI / 2;
-    g.add(fuselage);
-
-    // Nose cone
-    const nose = new THREE.Mesh(new THREE.ConeGeometry(0.09 * s, 0.4 * s, 8), metalMat);
-    nose.rotation.z = -Math.PI / 2;
-    nose.position.x = 1.0 * s;
-    g.add(nose);
-
-    // Cockpit dome
-    const cockpit = new THREE.Mesh(new THREE.SphereGeometry(0.10 * s, 10, 10, 0, Math.PI), glassMat);
-    cockpit.rotation.z = -Math.PI / 2;
-    cockpit.position.x = 0.25 * s;
-    cockpit.position.y = 0.10 * s;
-    g.add(cockpit);
-
-    // 4 wings in X pattern
-    const wingAngles = [40, -40, 140, -140];
-    for (const deg of wingAngles) {
-      const rad = (deg * Math.PI) / 180;
-      const sign = deg > 0 ? 1 : -1;
-
-      // Wing
-      const wing = new THREE.Mesh(new THREE.BoxGeometry(0.85 * s, 0.035 * s, 0.22 * s), metalMat);
-      wing.position.set(-0.15 * s, Math.sin(rad) * 0.28 * s, Math.cos(rad) * 0.28 * s);
-      wing.rotation.x = rad;
-      g.add(wing);
-
-      // Red stripe on wing
-      const stripe = new THREE.Mesh(new THREE.BoxGeometry(0.86 * s, 0.036 * s, 0.04 * s),
-        new THREE.MeshStandardMaterial({ color: 0xcc2200, roughness: 0.8 }));
-      stripe.position.copy(wing.position);
-      stripe.rotation.x = rad;
-      stripe.position.y += Math.sin(rad) * 0.001;
-      g.add(stripe);
-
-      // Engine nacelle at wingtip
-      const nacelle = new THREE.Mesh(new THREE.CylinderGeometry(0.055 * s, 0.055 * s, 0.32 * s, 8), engineMat);
-      nacelle.rotation.z = Math.PI / 2;
-      nacelle.position.set(-0.6 * s, Math.sin(rad) * 0.28 * s, Math.cos(rad) * 0.28 * s);
-      g.add(nacelle);
-
-      // Engine glow
-      const glow = new THREE.PointLight(0xff6600, 0.8, 0.25 * s);
-      glow.position.set(-0.76 * s, Math.sin(rad) * 0.28 * s, Math.cos(rad) * 0.28 * s);
-      g.add(glow);
-    }
-
-    // 4 laser cannons at wing tips (thin rods)
-    for (const deg of wingAngles) {
-      const rad = (deg * Math.PI) / 180;
-      const cannon = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.012 * s, 0.012 * s, 0.5 * s, 4),
-        darkMat
-      );
-      cannon.rotation.z = Math.PI / 2;
-      cannon.position.set(0.65 * s, Math.sin(rad) * 0.28 * s, Math.cos(rad) * 0.28 * s);
-      g.add(cannon);
-    }
-
-    return g;
-  }
-
-  private shootLaser(from: THREE.Vector3, to: THREE.Vector3, color: number) {
-    const geo = new THREE.BufferGeometry().setFromPoints([from.clone(), to.clone()]);
-    const mat = new THREE.LineBasicMaterial({ color, transparent: true, opacity: 0.9 });
-    const line = new THREE.Line(geo, mat);
-    this.scene.add(line);
-    setTimeout(() => {
-      this.scene.remove(line);
-      geo.dispose();
-      mat.dispose();
-    }, 75);
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    const mat = new THREE.PointsMaterial({ color: 0x22d3ee, size: 0.03, transparent: true, opacity: 0.4 });
+    this.particles = new THREE.Points(geo, mat);
+    this.scene.add(this.particles);
   }
 
   private animate(time = 0) {
     this.animationId = requestAnimationFrame(t => this.animate(t));
     const t = time * 0.001;
 
-    // Slow Death Star rotation
-    if (this.deathStar) this.deathStar.rotation.y += 0.0008;
-
-    // Ship orbits
-    for (const { mesh, data } of this.ships) {
-      data.angle += data.speed;
-
-      // Elliptical orbit projected onto a tilted plane
-      const local = new THREE.Vector3(
-        Math.cos(data.angle) * data.radius,
-        Math.sin(data.angle * 0.6) * data.radius * 0.25,
-        Math.sin(data.angle) * data.radius
-      );
-      local.applyAxisAngle(data.orbitAxis, 1.0); // tilt the orbital plane
-      mesh.position.copy(local);
-
-      // Orient ship nose along velocity direction
-      const vel = new THREE.Vector3(
-        -Math.sin(data.angle),
-        Math.cos(data.angle * 0.6) * 0.25 * 0.6,
-        Math.cos(data.angle)
-      ).normalize();
-      mesh.quaternion.setFromUnitVectors(new THREE.Vector3(1, 0, 0), vel);
-
-      // Fire lasers
-      data.frame++;
-      if (data.frame % data.laserEvery === 0) {
-        const impact = new THREE.Vector3(
-          (Math.random() - 0.5) * 2.2,
-          (Math.random() - 0.5) * 2.2,
-          (Math.random() - 0.5) * 2.2
-        );
-        this.shootLaser(mesh.position.clone(), impact, data.laserColor);
-      }
+    // Update anomaly shader
+    if (this.anomalyMat) {
+      this.anomalyMat.uniforms['uTime'].value = t;
     }
+
+    // Rotate cages
+    this.cages.forEach((cage, i) => {
+      const speed = i % 2 === 0 ? 1 : -1;
+      cage.rotation.x += 0.001 * speed * (i + 1);
+      cage.rotation.y += 0.002 * speed;
+      cage.rotation.z += 0.0005 * speed;
+    });
+
+    // Slow particle drift
+    if (this.particles) {
+      this.particles.rotation.y = t * 0.05;
+      this.particles.rotation.z = t * 0.02;
+    }
+
+    // Smooth camera orbit
+    this.camera.position.x = Math.sin(t * 0.2) * 12;
+    this.camera.position.z = Math.cos(t * 0.2) * 12;
+    this.camera.position.y = Math.sin(t * 0.3) * 4;
+    this.camera.lookAt(0, 0, 0);
 
     this.renderer.render(this.scene, this.camera);
 
-    // FPS
+    // UI Updates
     this.frameCount++;
     if (time - this.lastFpsTime >= 1000) {
-      this.ngZone.run(() => this.fps.set(this.frameCount));
+      this.ngZone.run(() => {
+        this.fps.set(this.frameCount);
+        this.camPos.set({
+          x: this.camera.position.x.toFixed(2),
+          y: this.camera.position.y.toFixed(2),
+          z: this.camera.position.z.toFixed(2)
+        });
+      });
       this.frameCount = 0;
       this.lastFpsTime = time;
     }
   }
 }
+

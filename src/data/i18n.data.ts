@@ -121,13 +121,13 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
     },
     bio: {
       eyebrow: "Sobre mim",
-      title: "Fullstack Developer | AI & Machine Learning",
-      summary: "Desenvolvedor Fullstack com mais de 5 anos de experiência em arquitetura de sistemas distribuídos, microserviços e integração com serviços em nuvem. Atualmente em transição para Engenharia de IA, com formação especializada em Machine Learning, LLMs e IA Generativa.",
+      title: "Senior Fullstack Developer | AI & Machine Learning",
+      summary: "Desenvolvedor Fullstack Sênior com mais de 5 anos de experiência em arquitetura de sistemas distribuídos, microserviços e integração com serviços em nuvem. Atualmente em transição para Engenharia de IA, com formação especializada em Machine Learning, LLMs e IA Generativa.",
       experienceTitle: "Experiência Profissional",
       educationTitle: "Formação Acadêmica",
       experience: [
         {
-          role: "Fullstack Developer Mid Level",
+          role: "Senior Fullstack Developer",
           company: "Instituto de Pesquisas Eldorado",
           period: "2024 — atual",
           items: [
@@ -288,13 +288,13 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
     },
     bio: {
       eyebrow: "About me",
-      title: "Fullstack Developer | AI & Machine Learning",
-      summary: "Fullstack Developer with 5+ years of experience in distributed systems architecture, microservices, and cloud integration. Currently transitioning to AI Engineering, with specialized training in Machine Learning, LLMs, and Generative AI.",
+      title: "Senior Fullstack Developer | AI & Machine Learning",
+      summary: "Senior Fullstack Developer with 5+ years of experience in distributed systems architecture, microservices, and cloud integration. Currently transitioning to AI Engineering, with specialized training in Machine Learning, LLMs, and Generative AI.",
       experienceTitle: "Work Experience",
       educationTitle: "Education",
       experience: [
         {
-          role: "Fullstack Developer Mid Level",
+          role: "Senior Fullstack Developer",
           company: "Instituto de Pesquisas Eldorado",
           period: "2024 — present",
           items: [

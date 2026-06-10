@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(node scripts/set-env.mjs)"
+      "Bash(node scripts/set-env.mjs)",
+      "Bash(Get-ChildItem -Path \"C:\\\\projects\\\\portfolio\" -Recurse -File)",
+      "Bash(Select-Object FullName)",
+      "Bash(grep -E '\\\\.\\(css|scss\\)$')"
     ]
   }
 }

@@ -3,17 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jonathan Malagueta | Principal Architect</title>
+  <title>Jonathan Malagueta | Senior Fullstack Developer</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold:      '#C8A96E',
+            'gold-dim':'#8A6E3E',
+            ink:       '#0E0E0F',
+            surface:   '#1A1A1C',
+            rim:       '#2C2C30',
+            muted:     '#8A8A94',
+            parchment: '#F0EDE6',
+          },
+          fontFamily: {
+            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            mono:    ['"DM Mono"', '"Courier New"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .glass-panel {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+    :root {
+      --color-bg:       #0E0E0F;
+      --color-surface:  #1A1A1C;
+      --color-border:   #2C2C30;
+      --color-muted:    #8A8A94;
+      --color-text:     #F0EDE6;
+      --color-gold:     #C8A96E;
+      --color-gold-dim: #8A6E3E;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0E0E0F; }
+    ::-webkit-scrollbar-thumb { background: #2C2C30; border-radius: 2px; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Status dot pulse */
+    @keyframes dot-pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.85); }
+    }
+    .dot-pulse { animation: dot-pulse 2s infinite; }
+
+    /* Nav link spacing */
+    .nav-mono {
+      font-family: "DM Mono", "Courier New", monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
     }
   </style>
+
 <script type="importmap">
 {
   "imports": {
@@ -31,7 +94,7 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-<body class="bg-slate-950 text-slate-200 antialiased selection:bg-cyan-500 selection:text-slate-950">
+<body class="bg-ink text-parchment antialiased selection:bg-gold selection:text-ink">
   <app-root></app-root>
 </body>
 </html>
