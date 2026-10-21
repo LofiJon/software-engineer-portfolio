@@ -95,18 +95,18 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
     nav: {
       about: "Sobre",
       services: "Serviços",
-      portfolio: "Portfólio",
+      portfolio: "Atuação",
       contact: "Contato",
       hire: "Contrate-me!"
     },
     hero: {
       badge: "Disponível para Projetos",
       greeting: "Olá, eu sou",
-      headline: "Engenharia de Software de Ponta a Ponta",
-      subtitle: "Fullstack Engineer em transição para IA. Especialista em Sistemas Distribuídos, IoT e Machine Learning. Transformando requisitos críticos em código sólido.",
-      cta: "Ver Estudos de Caso",
+      headline: "Engenheiro Fullstack & Machine Learning | Sistemas Distribuídos, IoT e Plataformas Críticas",
+      subtitle: "Projeto, integro e opero sistemas distribuídos, soluções IoT híbridas (on-premise e AWS), plataformas WMS e aplicações de Machine Learning prontas para produção.",
+      cta: "Ver Domínios de Atuação",
       ctaHire: "Contrate-me",
-      ctaWork: "Ver Trabalhos"
+      ctaWork: "Ver Atuação"
     },
     stats: [
       { value: "15+", label: "Projetos Entregues" },
@@ -121,8 +121,8 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
     },
     bio: {
       eyebrow: "Sobre mim",
-      title: "Senior Fullstack Developer | AI & Machine Learning",
-      summary: "Desenvolvedor Fullstack Sênior com mais de 5 anos de experiência em arquitetura de sistemas distribuídos, microserviços e integração com serviços em nuvem. Atualmente em transição para Engenharia de IA, com formação especializada em Machine Learning, LLMs e IA Generativa.",
+      title: "Senior Fullstack & AI/ML Engineer | Sistemas Distribuídos, IoT & Plataformas Críticas",
+      summary: "Engenheiro Fullstack & Machine Learning com mais de 5 anos de experiência em projetos críticos, plataformas logísticas (WMS), soluções IoT híbridas (on-premise e AWS), P&D e DevOps. Atuando com integração de modelos de IA a sistemas existentes, construindo soluções inteligentes e escaláveis prontas para produção.",
       experienceTitle: "Experiência Profissional",
       educationTitle: "Formação Acadêmica",
       experience: [
@@ -168,7 +168,7 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
         {
           degree: "Pós-Graduação em Engenharia de Software",
           institution: "FAVENI",
-          period: "Fev 2024 — Fev 2025"
+          period: "2026 — 2027"
         },
         {
           degree: "Bacharelado em Engenharia da Computação",
@@ -335,7 +335,7 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
         {
           degree: "Post-Grad in Software Engineering",
           institution: "FAVENI",
-          period: "Feb 2024 — Feb 2025"
+          period: "2026 — 2027"
         },
         {
           degree: "Bachelor's in Computer Engineering",

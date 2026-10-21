@@ -1,4 +1,5 @@
 import { Component, inject, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
 import { TranslationService } from './components/services/translation.service';
 import { CaseCardComponent } from './components/case-card/case-card.component';
@@ -8,7 +9,7 @@ import { ENV } from './env';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CaseCardComponent, ThreeVizComponent],
+  imports: [CommonModule, CaseCardComponent, ThreeVizComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './app.component.html'
 })
