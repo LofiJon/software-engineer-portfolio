@@ -13,6 +13,9 @@ dist-ssr
 *.local
 src/environments/
 
+# Angular build cache
+.angular/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

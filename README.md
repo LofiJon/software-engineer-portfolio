@@ -1,75 +1,104 @@
-# Jonathan Malagueta | Senior Engineering Portfolio
+# Jonathan Malagueta | Portfolio
 
-![Angular](https://img.shields.io/badge/Angular-18%2B-dd0031?style=flat&logo=angular)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat&logo=typescript)
+![Angular](https://img.shields.io/badge/Angular-21-dd0031?style=flat&logo=angular)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat&logo=typescript)
+![Tailwind](https://img.shields.io/badge/Tailwind-3.4-38bdf8?style=flat&logo=tailwindcss)
+![Three.js](https://img.shields.io/badge/Three.js-0.182-black?style=flat&logo=three.js)
 ![Status](https://img.shields.io/badge/Build-Passing-brightgreen)
-![License](https://img.shields.io/badge/License-MIT-yellow)
 
-> **"Engineering First" Portfolio.** This project showcases modern Frontend Architecture, featuring Angular 18+, granular reactivity with Signals, and high-performance rendering techniques including Three.js.
-
-## 🚀 About The Project
-
-This repository hosts the personal portfolio of **Jonathan Malagueta**, a Senior Fullstack Engineer specializing in Distributed Systems, IoT, and Scalable Architecture.
-
-Unlike standard portfolio templates, this application was engineered to demonstrate **enterprise-grade frontend practices**. It bridges the gap between complex backend logic (my background in AWS/IoT) and high-performance UI.
-
-### Key Technical Features
-
-* **Bleeding Edge Angular:** Built entirely with **Angular 18+**.
-* **Architecture:** 100% **Standalone Components** (No NgModules) for better tree-shaking and simplified architecture.
-* **Fine-Grained Reactivity:** State management utilizing **Angular Signals** (`signal`, `computed`, `effect`) instead of traditional `BehaviorSubject` or massive state libraries, ensuring distinct updates and Zone.js independence.
-* **Custom i18n Engine:** A lightweight, signal-based Internationalization service with **Lazy Loading** support for JSON translation files (PT-BR / EN), avoiding large initial bundles.
-* **Performance:** Extensive use of **Control Flow** syntax (`@if`, `@for`) and **Defferable Views** (`@defer`) to optimize the loading of heavy assets like 3D models.
-* **3D Integration:** Uses **Three.js** to render interactive elements, demonstrating capabilities beyond standard DOM manipulation.
+> **Fullstack & AI/ML Engineer** — Sistemas Distribuídos, IoT, Plataformas Críticas e Machine Learning aplicado em produção.
 
 ---
 
-## 🛠 Tech Ecosystem
+## Sobre o Projeto
 
-As a Polyglot Engineer, I navigate across multiple stacks, choosing the best tool for the architecture.
+Portfolio pessoal de **Jonathan Malagueta**, Fullstack Engineer sênior com atuação atual como **ML Engineer**.
 
-### 🚀 Core Specialist Stack (My Daily Drivers)
-> High-performance architectures I design and maintain daily.
-![Angular](https://img.shields.io/badge/Angular-18%2B-dd0031?style=flat&logo=angular)
-![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat&logo=nestjs)
-![.NET](https://img.shields.io/badge/.NET-512BD4?style=flat&logo=dotnet)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql)
-![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat&logo=amazon-aws)
+O site foi construído como peça de portfólio com dois objetivos:
 
-### ⚔️ Polyglot Experience (Production Ready)
-> Technologies I have shipped to production in diverse environments.
-**Frontend:** `React` `Vue.js` `Three.js`
-**Backend:** `Spring Boot (Java)` `Django (Python)` `PHP`
-**Data:** `MongoDB` `MySQL` `Redis` `RabbitMQ`
+1. **Apresentar o escopo real de atuação** — WMS/logística, IoT híbrido (on-premise e AWS), P&D e startups, e IA aplicada — sem expor clientes ou quebrar NDA.
+2. **Demonstrar prática de engenharia de front-end** — arquitetura, performance e acabamento visual.
 
 ---
 
-### 📱 Mobile OS & Fleet Orchestration
-> Deep expertise in managing enterprise Android ecosystems.
-![Android](https://img.shields.io/badge/Android_AOSP-3DDC84?style=flat&logo=android&logoColor=white)
-![Google Cloud](https://img.shields.io/badge/Google_AMAPI-4285F4?style=flat&logo=googlecloud&logoColor=white)
-**Skills:** `Custom ROMs` `Kiosk Mode` `Zero-Touch Provisioning` `MQTT/IoT`
+## Stack
 
-## 📂 Architecture & Folder Structure
+| Camada | Tecnologias |
+| --- | --- |
+| **Framework** | Angular 21 (Standalone Components, Signals, `@defer`, Control Flow) |
+| **Linguagem** | TypeScript 5.9 |
+| **Estilos** | Tailwind CSS 3.4 + SCSS (design system próprio) |
+| **3D** | Three.js (WebGL) |
+| **i18n** | Service próprio baseado em Signals, com lazy loading de JSON |
+| **Build** | Angular CLI + Vite, deploy na Vercel |
 
-The project follows a **Feature-Based Architecture** to ensure scalability:
+---
+
+## Arquitetura
 
 ```text
 src/
+├── app.component.ts          # Root: orquestração, meta tags, SEO
+├── app.component.html        # Template principal da landing
 ├── app/
-│   ├── core/                # Singletons, Global Services, Interceptors
-│   │   ├── i18n/            # Custom Signal-based Translation Service
-│   │   ├── theme/           # Theme management (Dark/Light)
-│   │   └── services/        # API and Logic services
-│   ├── features/            # Domain-specific modules (Lazy Loaded)
-│   │   ├── hero/            # Hero section logic
-│   │   ├── projects/        # Project showcase (Case Studies)
-│   │   └── about/           # Bio & Skills
-│   ├── shared/              # Reusable UI Components (Buttons, Cards)
-│   │   ├── ui/
-│   │   └── utils/
-│   ├── assets/
-│   │   ├── i18n/            # Translation JSONs (en.json, pt.json)
-│   │   └── models/          # 3D Assets
-│   └── app.component.ts     # Root with Signals orchestration
-└── main.ts                  # Bootstrap logic
+│   └── directives/
+│       └── scroll-reveal.directive.ts   # Reveal on scroll via IntersectionObserver
+├── components/
+│   ├── case-card/            # Cards de Domínio de Atuação
+│   ├── services/             # TranslationService (signal-based i18n)
+│   └── three-viz/            # Visualizador 3D (constelação de sistemas distribuídos)
+├── data/
+│   └── i18n.data.ts          # Conteúdo bilíngue (PT/EN)
+├── env.ts                    # Ponte para o ambiente gerado
+└── styles.scss               # Design system + tokens + scroll reveal
+```
+
+### Decisões Técnicas
+
+- **Standalone Components** — sem NgModules, melhor tree-shaking e acoplamento explícito.
+- **Fine-grained Reactivity** — `signal()` / `computed()` no lugar de `BehaviorSubject` eRxJS subjects.
+- **Deferrable Views (`@defer`)** — o bundle do Three.js (517 kB) só é baixado quando o navegador fica ocioso, fora do caminho crítico de renderização.
+- **Render loop fora do Angular Zone** — a animação WebGL não dispara change detection, evitando travamentos de ChangeDetection na interação.
+- **i18n por Signals** — troca de idioma sem recarregar, com dados de tradução tipados por interface.
+- **Scroll reveal progressivo** — `IntersectionObserver` com `prefers-reduced-motion` respeitado.
+
+---
+
+## Scripts
+
+```bash
+npm run dev       # Servidor de desenvolvimento
+npm run build     # Build de produção
+npm run preview   # Servidor em modo produção
+```
+
+### Variáveis de Ambiente
+
+O build gera `src/environments/environment.ts` a partir de um `.env` local (ou das variáveis do ambiente de deploy):
+
+```bash
+VITE_PUBLIC_URL=
+VITE_PHOTO_URL=
+VITE_WHATSAPP_URL=
+VITE_GITHUB_URL=
+VITE_LINKEDIN_URL=
+```
+
+---
+
+## Deploy
+
+Configurado para Vercel:
+
+```json
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist"
+}
+```
+
+---
+
+## Licença
+
+MIT

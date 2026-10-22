@@ -1,100 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jonathan Malagueta | Senior Fullstack Developer</title>
+  <title>Jonathan Malagueta | Senior Fullstack & AI/ML Engineer</title>
+  <meta name="description" content="Senior Fullstack & AI/ML Engineer com experiência em sistemas distribuídos, IoT híbrido, WMS, P&D, DevOps e Machine Learning aplicado a produtos e plataformas críticas.">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
-
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            gold:      '#C8A96E',
-            'gold-dim':'#8A6E3E',
-            ink:       '#0E0E0F',
-            surface:   '#1A1A1C',
-            rim:       '#2C2C30',
-            muted:     '#8A8A94',
-            parchment: '#F0EDE6',
-          },
-          fontFamily: {
-            display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            mono:    ['"DM Mono"', '"Courier New"', 'monospace'],
-          }
-        }
-      }
-    }
-  </script>
-
-  <style>
-    :root {
-      --color-bg:       #0E0E0F;
-      --color-surface:  #1A1A1C;
-      --color-border:   #2C2C30;
-      --color-muted:    #8A8A94;
-      --color-text:     #F0EDE6;
-      --color-gold:     #C8A96E;
-      --color-gold-dim: #8A6E3E;
-    }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: #0E0E0F; }
-    ::-webkit-scrollbar-thumb { background: #2C2C30; border-radius: 2px; }
-
-    /* Scroll reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.revealed {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Status dot pulse */
-    @keyframes dot-pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.5; transform: scale(0.85); }
-    }
-    .dot-pulse { animation: dot-pulse 2s infinite; }
-
-    /* Nav link spacing */
-    .nav-mono {
-      font-family: "DM Mono", "Courier New", monospace;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-    }
-  </style>
-
-<script type="importmap">
-{
-  "imports": {
-    "rxjs": "https://esm.sh/rxjs@^7.8.2?conditions=es2015",
-    "rxjs/operators": "https://esm.sh/rxjs@^7.8.2/operators?conditions=es2015",
-    "rxjs/ajax": "https://esm.sh/rxjs@^7.8.2/ajax?conditions=es2015",
-    "rxjs/webSocket": "https://esm.sh/rxjs@^7.8.2/webSocket?conditions=es2015",
-    "rxjs/testing": "https://esm.sh/rxjs@^7.8.2/testing?conditions=es2015",
-    "rxjs/fetch": "https://esm.sh/rxjs@^7.8.2/fetch?conditions=es2015",
-    "@angular/compiler": "https://esm.sh/@angular/compiler@^21.1.2?external=rxjs",
-    "@angular/platform-browser": "https://esm.sh/@angular/platform-browser@^21.1.2?external=rxjs",
-    "@angular/core": "https://esm.sh/@angular/core@^21.1.2?external=rxjs"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;700&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Orbitron:wght@400;600;700;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 </head>
-<body class="bg-ink text-parchment antialiased selection:bg-gold selection:text-ink">
+<body class="antialiased">
   <app-root></app-root>
 </body>
 </html>

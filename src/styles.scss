@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   REFINED INDUSTRIAL DESIGN SYSTEM
+   Dark Voids · Cyan Signal · Chamfered Panels
+   ========================================================================== */
+
+:root {
+  --color-bg: #020617;
+  --color-surface: #050510;
+  --color-panel: #0f1020;
+  --color-border: #1e293b;
+  --color-muted: #64748b;
+  --color-signal: #22d3ee;
+  --color-signal-soft: #67e8f9;
+  --color-orchid: #a78bfa;
+
+  --font-heading: 'Orbitron', 'Share Tech Mono', monospace;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+html, body {
+  background-color: var(--color-bg);
+  color: #e2e8f0;
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+/* --------------------------------------------------------------------------
+   Chamfered Corners
+   Radius is strictly 0px per design system.
+   -------------------------------------------------------------------------- */
+.clip-chamfer {
+  clip-path: polygon(
+    0 10px,
+    10px 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    10px 100%,
+    0 calc(100% - 10px)
+  );
+}
+
+.clip-chamfer-lg {
+  clip-path: polygon(
+    0 16px,
+    16px 0,
+    calc(100% - 16px) 0,
+    100% 16px,
+    100% calc(100% - 16px),
+    calc(100% - 16px) 100%,
+    16px 100%,
+    0 calc(100% - 16px)
+  );
+}
+
+.clip-chamfer-sm {
+  clip-path: polygon(
+    0 6px,
+    6px 0,
+    calc(100% - 6px) 0,
+    100% 6px,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    6px 100%,
+    0 calc(100% - 6px)
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Background Textures
+   -------------------------------------------------------------------------- */
+.grid-bg {
+  background-size: 30px 30px;
+  background-image:
+    linear-gradient(to right, rgba(51, 65, 85, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(51, 65, 85, 0.35) 1px, transparent 1px);
+}
+
+/* --------------------------------------------------------------------------
+   Scrollbar
+   -------------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+  border-left: 1px solid var(--color-border);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-signal);
+  box-shadow: 0 0 6px rgba(34, 211, 238, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   Scroll Reveal
+   -------------------------------------------------------------------------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(6px);
+  transition:
+    opacity 0.9s cubic-bezier(0.25, 0.8, 0.25, 1),
+    transform 0.9s cubic-bezier(0.25, 0.8, 0.25, 1),
+    filter 0.9s cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: opacity, transform, filter;
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}

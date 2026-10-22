@@ -18,12 +18,15 @@
     "@angular/core": "^21.1.0",
     "@angular/platform-browser": "^21.1.0",
     "rxjs": "^7.8.2",
-    "tailwindcss": "latest",
+    "tailwindcss": "^3.4.19",
     "three": "^0.182.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
     "@types/three": "^0.182.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.30",
+    "sass": "^1.97.1",
     "typescript": "^5.9.0",
     "vite": "^6.2.0"
   }

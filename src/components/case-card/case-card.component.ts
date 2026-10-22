@@ -6,10 +6,10 @@ import { CaseStudy } from '../../data/i18n.data';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <div class="group relative h-full bg-[#0f1020] border border-slate-800 clip-chamfer hover:border-cyan-500/60 transition-all duration-300 hover:shadow-[0_0_40px_-10px_rgba(6,182,212,0.25)] hover:-translate-y-1 flex flex-col overflow-hidden">
+    <div class="group relative h-full bg-[#0f1020] border border-slate-800 clip-chamfer hover:border-cyan-500/60 transition-all duration-300 hover:shadow-[0_0_40px_-10px_rgba(6,182,212,0.25)] hover:-translate-y-1 flex flex-col overflow-hidden min-h-[320px]">
       <!-- Subtle grid overlay -->
       <div class="absolute inset-0 opacity-[0.04] pointer-events-none bg-[radial-gradient(circle_at_top,rgba(6,182,212,0.25),transparent_55%)]"></div>
-      <div class="absolute inset-0 opacity-[0.08] pointer-events-none cyber-grid-bg mix-blend-soft-light"></div>
+      <div class="absolute inset-0 opacity-[0.08] pointer-events-none grid-bg mix-blend-soft-light"></div>
 
       <!-- Top accent bar -->
       <div class="absolute top-0 left-0 h-px w-full bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent"></div>
