@@ -121,6 +121,62 @@ html {
 }
 
 /* --------------------------------------------------------------------------
+   Chamfer Frame
+   A bordered chamfered surface. clip-path alone cuts the border off the
+   diagonal corners, so the border is the element's own background and the
+   fill is an inset ::before with the same polygon.
+   Tune with --frame-border / --frame-fill (fill must be opaque).
+   -------------------------------------------------------------------------- */
+.chamfer-frame {
+  --chamfer: 10px;
+  --frame-border: #1e293b;
+  --frame-fill: #0f1020;
+  position: relative;
+  isolation: isolate;
+  background-color: var(--frame-border);
+  transition: background-color 0.3s ease;
+  clip-path: polygon(
+    0 var(--chamfer),
+    var(--chamfer) 0,
+    calc(100% - var(--chamfer)) 0,
+    100% var(--chamfer),
+    100% calc(100% - var(--chamfer)),
+    calc(100% - var(--chamfer)) 100%,
+    var(--chamfer) 100%,
+    0 calc(100% - var(--chamfer))
+  );
+
+  &::before {
+    --inner: calc(var(--chamfer) - 0.59px); // keeps the diagonal edge 1px thick
+    content: '';
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    background-color: var(--frame-fill);
+    transition: background-color 0.3s ease;
+    clip-path: polygon(
+      0 var(--inner),
+      var(--inner) 0,
+      calc(100% - var(--inner)) 0,
+      100% var(--inner),
+      100% calc(100% - var(--inner)),
+      calc(100% - var(--inner)) 100%,
+      var(--inner) 100%,
+      0 calc(100% - var(--inner))
+    );
+  }
+
+  &.chamfer-sm {
+    --chamfer: 6px;
+  }
+
+  &:focus-visible {
+    outline: none;
+    --frame-border: var(--color-signal-soft);
+  }
+}
+
+/* --------------------------------------------------------------------------
    Background Textures
    -------------------------------------------------------------------------- */
 .grid-bg {

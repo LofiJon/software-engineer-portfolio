@@ -36,7 +36,7 @@ interface CometPacket {
           <span class="w-1.5 h-1.5 bg-cyan-300 shadow-[0_0_12px_#22d3ee]"></span>
           <span>CONSTELLATION::MESH</span>
         </div>
-        <div class="text-[10px] font-mono uppercase tracking-[0.4em] text-violet-300/80">DISTRIBUTED.SYS</div>
+        <div class="hidden sm:block text-[10px] font-mono uppercase tracking-[0.4em] text-violet-300/80">DISTRIBUTED.SYS</div>
       </div>
     </div>
   `

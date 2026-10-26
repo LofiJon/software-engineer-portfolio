@@ -5,12 +5,13 @@ import { TranslationService } from './components/services/translation.service';
 import { CaseCardComponent } from './components/case-card/case-card.component';
 import { ThreeVizComponent } from './components/three-viz/three-viz.component';
 import { ScrollRevealDirective } from './app/directives/scroll-reveal.directive';
+import { TrustHtmlPipe } from './app/pipes/trust-html.pipe';
 import { ENV } from './env';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, CaseCardComponent, ThreeVizComponent, ScrollRevealDirective],
+  imports: [CommonModule, CaseCardComponent, ThreeVizComponent, ScrollRevealDirective, TrustHtmlPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './app.component.html'
 })
