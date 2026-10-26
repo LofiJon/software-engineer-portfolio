@@ -131,10 +131,10 @@ export class GalaxyBgComponent implements AfterViewInit, OnDestroy {
 
     const clouds: [number, number, number, string, number][] = [
       // x, y, radius (relative), rgb, alpha
-      [0.18, 0.22, 0.55, '34,211,238', 0.05],
-      [0.82, 0.35, 0.5, '167,139,250', 0.045],
-      [0.55, 0.78, 0.6, '56,189,248', 0.04],
-      [0.3, 0.6, 0.35, '139,92,246', 0.03]
+      [0.18, 0.22, 0.55, '34,211,238', 0.08],
+      [0.82, 0.35, 0.5, '167,139,250', 0.075],
+      [0.55, 0.78, 0.6, '56,189,248', 0.065],
+      [0.3, 0.6, 0.35, '139,92,246', 0.05]
     ];
     const base = Math.max(w, h);
     for (const [cx, cy, rr, rgb, a] of clouds) {
@@ -152,7 +152,7 @@ export class GalaxyBgComponent implements AfterViewInit, OnDestroy {
     ctx.rotate(-0.42);
     const band = ctx.createLinearGradient(0, -h * 0.18, 0, h * 0.18);
     band.addColorStop(0, 'rgba(148,163,184,0)');
-    band.addColorStop(0.5, 'rgba(148,163,184,0.035)');
+    band.addColorStop(0.5, 'rgba(148,163,184,0.05)');
     band.addColorStop(1, 'rgba(148,163,184,0)');
     ctx.fillStyle = band;
     ctx.fillRect(-base, -h * 0.18, base * 2, h * 0.36);
