@@ -137,8 +137,8 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
       description: "Renderização WebGL em tempo real, otimizado para 60fps. Demonstração das capacidades do Three.js com geometria procedural, iluminação dinâmica e animações fora do Angular Zone."
     },
     bio: {
-      eyebrow: "Sobre mim",
-      title: "Senior Fullstack & AI/ML Engineer | Sistemas Distribuídos, IoT & Plataformas Críticas",
+      eyebrow: "Perfil",
+      title: "Sobre mim",
       summary: "Engenheiro Fullstack & Machine Learning com mais de 5 anos de experiência em projetos críticos, plataformas logísticas (WMS), soluções IoT híbridas (on-premise e AWS), P&D e DevOps. Atuando com integração de modelos de IA a sistemas existentes, construindo soluções inteligentes e escaláveis prontas para produção.",
       experienceTitle: "Experiência Profissional",
       educationTitle: "Formação Acadêmica",
@@ -313,8 +313,8 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
       description: "Real-time WebGL rendering, optimized for 60fps. A demonstration of Three.js capabilities with procedural geometry, dynamic lighting, and animations running outside Angular Zone."
     },
     bio: {
-      eyebrow: "About me",
-      title: "Senior Fullstack Developer | AI & Machine Learning",
+      eyebrow: "Profile",
+      title: "About me",
       summary: "Senior Fullstack Developer with 5+ years of experience in distributed systems architecture, microservices, and cloud integration. Currently transitioning to AI Engineering, with specialized training in Machine Learning, LLMs, and Generative AI.",
       experienceTitle: "Work Experience",
       educationTitle: "Education",
