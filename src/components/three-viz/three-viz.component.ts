@@ -30,13 +30,13 @@ interface CometPacket {
   template: `
     <div class="relative w-full h-full bg-[#02010f] overflow-hidden">
       <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_25%,#02010f_100%)]"></div>
-      <canvas #canvas class="w-full h-full outline-none"></canvas>
+      <canvas #canvas class="w-full h-full outline-none" role="img" aria-label="Animated 3D constellation of connected nodes"></canvas>
       <div class="absolute bottom-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-        <div class="flex items-center gap-2 text-[9px] font-mono uppercase tracking-[0.4em] text-slate-500">
+        <div class="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.4em] text-slate-400">
           <span class="w-1.5 h-1.5 bg-cyan-300 shadow-[0_0_12px_#22d3ee]"></span>
           <span>CONSTELLATION::MESH</span>
         </div>
-        <div class="text-[9px] font-mono uppercase tracking-[0.4em] text-violet-300/70">DISTRIBUTED.SYS</div>
+        <div class="text-[10px] font-mono uppercase tracking-[0.4em] text-violet-300/80">DISTRIBUTED.SYS</div>
       </div>
     </div>
   `
@@ -56,6 +56,10 @@ export class ThreeVizComponent implements AfterViewInit, OnDestroy {
   private packets: CometPacket[] = [];
 
   private animationId = 0;
+  private running = false;
+  private reducedMotion = false;
+  private resizeObserver?: ResizeObserver;
+  private visibilityObserver?: IntersectionObserver;
   private targetRotX = 0;
   private targetRotY = 0;
   private currentRotX = 0;
@@ -69,7 +73,9 @@ export class ThreeVizComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    cancelAnimationFrame(this.animationId);
+    this.stop();
+    this.resizeObserver?.disconnect();
+    this.visibilityObserver?.disconnect();
     window.removeEventListener('mousemove', this.onMouseMove);
     this.renderer?.dispose();
   }
@@ -102,17 +108,40 @@ export class ThreeVizComponent implements AfterViewInit, OnDestroy {
     this.createConstellation();
     this.createComets();
 
-    const resizeObserver = new ResizeObserver(() => {
+    this.resizeObserver = new ResizeObserver(() => {
       const nw = parent.clientWidth;
       const nh = parent.clientHeight;
       if (!nw || !nh) return;
       this.renderer.setSize(nw, nh);
       this.camera.aspect = nw / nh;
       this.camera.updateProjectionMatrix();
+      if (!this.running) this.renderer.render(this.scene, this.camera);
     });
-    resizeObserver.observe(parent);
+    this.resizeObserver.observe(parent);
 
+    // Respect reduced-motion: render a single static frame instead of looping
+    this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (this.reducedMotion) {
+      this.renderer.render(this.scene, this.camera);
+      return;
+    }
+
+    // Only animate while the canvas is on screen
+    this.visibilityObserver = new IntersectionObserver(([entry]) => {
+      entry.isIntersecting ? this.start() : this.stop();
+    });
+    this.visibilityObserver.observe(parent);
+  }
+
+  private start(): void {
+    if (this.running) return;
+    this.running = true;
     this.ngZone.runOutsideAngular(() => this.animate());
+  }
+
+  private stop(): void {
+    this.running = false;
+    cancelAnimationFrame(this.animationId);
   }
 
   private createStarfield(): void {
@@ -313,6 +342,7 @@ export class ThreeVizComponent implements AfterViewInit, OnDestroy {
   }
 
   private initInteraction(): void {
+    if (this.reducedMotion) return;
     window.addEventListener('mousemove', this.onMouseMove, { passive: true });
   }
 

@@ -20,9 +20,9 @@ import { CaseStudy } from '../../data/i18n.data';
           <div class="flex items-center gap-2">
             <span class="text-[10px] font-mono tracking-[0.4em] uppercase text-cyan-400/80">DOMAIN::{{ domainIndex() }}</span>
             <div class="h-px w-6 bg-cyan-400/40"></div>
-            <span class="text-[10px] font-mono tracking-[0.3em] uppercase text-slate-500">{{ item().category }}</span>
+            <span class="text-[10px] font-mono tracking-[0.3em] uppercase text-slate-400">{{ item().category }}</span>
           </div>
-          <div class="relative flex items-center gap-1.5">
+          <div class="relative flex items-center gap-1.5" aria-hidden="true">
             <span class="w-1 h-1 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span>
             <span class="w-1 h-1 rounded-full bg-cyan-400/60"></span>
             <span class="w-1 h-1 rounded-full bg-cyan-400/30"></span>

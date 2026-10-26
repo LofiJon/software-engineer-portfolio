@@ -15,12 +15,20 @@ export interface EducationItem {
 }
 
 export interface TranslationData {
+  meta: {
+    title: string;
+    description: string;
+  };
   nav: {
     about: string;
     services: string;
     portfolio: string;
     contact: string;
     hire: string;
+    skip: string;
+    menu: string;
+    switchLang: string;
+    newTab: string;
   };
   hero: {
     badge: string;
@@ -64,6 +72,7 @@ export interface TranslationData {
   cases: {
     eyebrow: string;
     title: string;
+    description: string;
     items: CaseStudy[];
   };
   contact: {
@@ -92,12 +101,20 @@ export interface CaseStudy {
 
 export const TRANSLATIONS: Record<Lang, TranslationData> = {
   pt: {
+    meta: {
+      title: "Jonathan Malagueta | Senior Fullstack & AI/ML Engineer",
+      description: "Senior Fullstack & AI/ML Engineer com experiência em sistemas distribuídos, IoT híbrido, WMS, P&D, DevOps e Machine Learning aplicado a produtos e plataformas críticas."
+    },
     nav: {
       about: "Sobre",
       services: "Serviços",
       portfolio: "Atuação",
       contact: "Contato",
-      hire: "Contrate-me!"
+      hire: "Contrate-me!",
+      skip: "Pular para o conteúdo",
+      menu: "Menu de navegação",
+      switchLang: "Mudar idioma para inglês",
+      newTab: "(abre em nova aba)"
     },
     hero: {
       badge: "Disponível para Projetos",
@@ -226,6 +243,7 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
     cases: {
       eyebrow: "Projetos",
       title: "Desafios Técnicos & Soluções",
+      description: "Capacidades comprovadas em plataformas críticas, integração de sistemas e aplicação prática de IA em produção.",
       items: [
         {
           id: 'case1',
@@ -259,12 +277,20 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
     footer: "© 2026 Jonathan Malagueta. Deployed on Vercel."
   },
   en: {
+    meta: {
+      title: "Jonathan Malagueta | Senior Fullstack & AI/ML Engineer",
+      description: "Senior Fullstack & AI/ML Engineer experienced in distributed systems, hybrid IoT, WMS, R&D, DevOps and Machine Learning applied to critical products and platforms."
+    },
     nav: {
       about: "About",
       services: "Services",
       portfolio: "Portfolio",
       contact: "Contact",
-      hire: "Hire Me!"
+      hire: "Hire Me!",
+      skip: "Skip to content",
+      menu: "Navigation menu",
+      switchLang: "Switch language to Portuguese",
+      newTab: "(opens in a new tab)"
     },
     hero: {
       badge: "Available for Projects",
@@ -393,6 +419,7 @@ export const TRANSLATIONS: Record<Lang, TranslationData> = {
     cases: {
       eyebrow: "Projects",
       title: "Technical Challenges & Solutions",
+      description: "Proven capabilities across critical platforms, systems integration and practical AI applied in production.",
       items: [
         {
           id: 'case1',
